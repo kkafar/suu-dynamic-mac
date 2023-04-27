@@ -20,6 +20,8 @@ RUN apt-get -qq update \
        pciutils \
        iproute2 \
        sudo \
+       ethtool \
+       lshw \
   && pip3 install \
        meson \
        ninja \
