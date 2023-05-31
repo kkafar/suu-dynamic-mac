@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dynamic-mac-demo
+  name: dynamic-mac
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dynamic-mac-demo
+  template:
+    metadata:
+      name: dynamic-mac-pod
+      labels:
+        app: dynamic-mac-demo
+      annotations:
+        k8s.v1.cni.cncf.io/networks: network-config
+    spec:
+      containers:
+      - name:  dynamic-mac-pod
+        command: ["/bin/sh", "-c", "trap : TERM INT; sleep infinity & wait"]
+        image: ra77us/suu:1.0.0
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN"]
